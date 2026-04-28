@@ -185,9 +185,8 @@ QHeaderView::section:hover {
 
 /* ── Toolbar ── */
 QToolBar {
-    background: #111111;
-    border: 1px solid #222222;
-    border-radius: 8px;
+    background: transparent;
+    border: none;
     padding: 4px 8px;
     margin: 6px 6px 3px 6px;
     spacing: 4px;
