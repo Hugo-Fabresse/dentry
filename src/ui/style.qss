@@ -273,9 +273,8 @@ QLineEdit:focus {
 
 /* ── Status bar ── */
 QStatusBar {
-    background: #111111;
-    border: 1px solid #222222;
-    border-radius: 8px;
+    background: transparent;
+	border: none;
     font-size: 9pt;
     color: #ffffff;
     padding: 6px 10px 6px 16px;

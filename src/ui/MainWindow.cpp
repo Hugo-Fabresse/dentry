@@ -16,6 +16,7 @@
 
 #include <QApplication>
 #include <QDir>
+#include <QItemSelection>
 
 namespace dentry::ui {
 
@@ -146,6 +147,34 @@ namespace dentry::ui {
 
             connect(m_toolbar, &ToolBar::searchChanged,
                     fsModel, &model::FileSystemModel::setFilter);
+        }
+
+        // ── Status bar ────────────────────────────────────────────────────
+        connect(fsModel, &model::FileSystemModel::directoryLoaded, this, [this, fsModel]() {
+            int folders = 0;
+            int files   = 0;
+            for (const auto &entry : fsModel->entries()) {
+                if (entry.isDir) ++folders;
+                else             ++files;
+            }
+            m_statusbar->setDirectoryStats(folders, files);
+        });
+
+        connect(view->selectionModel(), &QItemSelectionModel::selectionChanged, this,
+                [this](const QItemSelection &, const QItemSelection &) {
+            auto *sel = m_centralWidget->fileListView()->selectionModel();
+            m_statusbar->setSelectionCount(sel->selectedRows().count());
+        });
+
+        // Initial stats — directoryLoaded fired before connections were set up.
+        {
+            int folders = 0;
+            int files   = 0;
+            for (const auto &entry : fsModel->entries()) {
+                if (entry.isDir) ++folders;
+                else             ++files;
+            }
+            m_statusbar->setDirectoryStats(folders, files);
         }
 
         // ── File operations ───────────────────────────────────────────────
