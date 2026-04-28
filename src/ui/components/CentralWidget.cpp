@@ -18,11 +18,9 @@ namespace dentry::ui {
 
         m_sidebar = new SideBar(m_splitter);
         m_fileListView = new FileListView(m_splitter);
-        m_previewPanel = new PreviewPanel(m_splitter);
 
         m_splitter->addWidget(m_sidebar);
         m_splitter->addWidget(m_fileListView);
-        m_splitter->addWidget(m_previewPanel);
 
         layout.addWidget(m_splitter);
 

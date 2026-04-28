@@ -5,7 +5,6 @@
 #include "ui/DefaultLayout.h"
 #include "ui/UIComponent.h"
 #include "ui/components/FileListView.h"
-#include "ui/components/PreviewPanel.h"
 #include "ui/components/Sidebar.h"
 
 #include <QPointer>
@@ -23,7 +22,6 @@ public:
 
     [[nodiscard]] FileListView *fileListView() const { return m_fileListView; }
     [[nodiscard]] SideBar      *sidebar()      const { return m_sidebar; }
-    [[nodiscard]] PreviewPanel *previewPanel() const { return m_previewPanel; }
 
 protected:
     void setupLayout(HLayout &layout) override;
@@ -32,7 +30,7 @@ private:
     QPointer<QSplitter>    m_splitter;
     QPointer<SideBar>      m_sidebar;
     QPointer<FileListView> m_fileListView;
-    QPointer<PreviewPanel> m_previewPanel;
 };
 
 } // namespace dentry::ui
+
