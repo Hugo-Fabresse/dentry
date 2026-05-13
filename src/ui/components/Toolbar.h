@@ -33,6 +33,9 @@ public:
     /** @brief Focuses search input and selects all text for immediate typing. */
     void focusSearch();
 
+    /** @brief Clears the search bar text. */
+    void clearSearch();
+
 signals:
     /** @brief Emitted when the back button is clicked. */
     void backRequested();
@@ -49,6 +52,7 @@ signals:
 protected:
     void setupStyle()       override;
     void setupSize()        override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
     void setupWidgets();

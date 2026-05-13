@@ -2,7 +2,10 @@
 #include "log/Logger.h"
 #include "ui/components/Toolbar.h"
 
+#include <QKeyEvent>
 #include <QToolButton>
+
+#include "app/events/EventBus.h"
 
 namespace dentry::ui {
 
@@ -53,6 +56,7 @@ namespace dentry::ui {
         connect(m_searchBar, &QLineEdit::textChanged,
                 this, &ToolBar::searchChanged);
         addWidget(m_searchBar);
+        m_searchBar->installEventFilter(this);
     }
 
     void ToolBar::setupStyle() {
@@ -83,6 +87,27 @@ namespace dentry::ui {
 
         m_searchBar->setFocus();
         m_searchBar->selectAll();
+    }
+
+    void ToolBar::clearSearch() {
+        if (m_searchBar)
+            m_searchBar->clear();
+    }
+
+    bool ToolBar::eventFilter(QObject *watched, QEvent *event) {
+        if (watched == m_searchBar && event->type() == QEvent::KeyPress) {
+            auto *ke = static_cast<QKeyEvent *>(event);
+            if (ke->key() == Qt::Key_Escape) {
+                m_searchBar->clear();
+                emit app::events::EventBus::instance()->focusWidget("FileListView");
+                return true;
+            }
+            if (ke->key() == Qt::Key_Return) {
+                emit app::events::EventBus::instance()->focusWidget("FileListView");
+                return true;
+            }
+        }
+        return QToolBar::eventFilter(watched, event);
     }
 
 } // namespace dentry::ui

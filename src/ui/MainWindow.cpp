@@ -149,6 +149,10 @@ namespace dentry::ui {
                     fsModel, &model::FileSystemModel::setFilter);
         }
 
+        connect(navController, &app::NavigationController::pathChanged, this, [this] {
+            m_toolbar->clearSearch();
+        });
+
         // ── Status bar ────────────────────────────────────────────────────
         connect(fsModel, &model::FileSystemModel::directoryLoaded, this, [this, fsModel]() {
             int folders = 0;
