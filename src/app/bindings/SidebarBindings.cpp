@@ -63,6 +63,11 @@ namespace dentry::app::bindings {
                         toolbar->toggleHidden();
                 });
 
+                map->bind(Qt::Key_Less, [toolbar] {
+                    if (toolbar)
+                        toolbar->backRequested();
+                });
+
                 map->bind(Qt::Key_F, [toolbar] {
                     if (toolbar)
                         toolbar->focusSearch();
