@@ -58,11 +58,6 @@ namespace dentry::app::bindings {
                         toolbar->triggerHome();
                 });
 
-                map->bind(Qt::Key_QuoteLeft, [toolbar] {
-                    if (toolbar)
-                        toolbar->triggerHome();
-                }, Qt::ShiftModifier);
-
                 map->bind(Qt::Key_Period, [toolbar] {
                     if (toolbar)
                         toolbar->toggleHidden();

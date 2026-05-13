@@ -37,7 +37,12 @@ void InputMap::setSequenceTimeout(int ms) {
 
 bool InputMap::dispatch(QKeyEvent *event) {
     const auto key  = static_cast<Qt::Key>(event->key());
-    const auto mods = event->modifiers();
+    const bool isLetter = (key >= Qt::Key_A && key <= Qt::Key_Z);
+    auto       mods = event->modifiers()
+                      & ~Qt::GroupSwitchModifier
+                      & ~Qt::KeypadModifier;
+    if (!isLetter && key >= Qt::Key_Space && key <= Qt::Key_AsciiTilde)
+        mods &= ~Qt::ShiftModifier;
 
     if (!m_sequences.isEmpty() && mods == Qt::NoModifier) {
         m_pending.append(key);
