@@ -29,6 +29,9 @@ public:
      */
     [[nodiscard]] QStringList selectedPaths() const;
 
+signals:
+    void contextMenuKeyPressed();
+
 protected:
     void setupStyle() override;
     void setupConnections() override;

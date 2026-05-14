@@ -203,6 +203,24 @@ namespace dentry::ui {
                 m->currentPath()
             );
         });
+
+        connect(view, &FileListView::contextMenuKeyPressed,
+            this, [this] {
+            auto *v = m_centralWidget->fileListView();
+            auto *m = qobject_cast<model::FileSystemModel *>(v->model());
+            if (!v || !m) return;
+
+            QPoint pos;
+            auto cur = v->currentIndex();
+            if (cur.isValid()) {
+              QRect rect = v->visualRect(cur);
+              pos = v->viewport()->mapToGlobal(rect.center());
+            } else {
+              pos = v->viewport()->mapToGlobal(v->viewport()->rect().center());
+            }
+
+            m_contextMenu->popup(pos, v->selectedPaths(), m->currentPath());
+        });
     }
 
 } // namespace dentry::ui

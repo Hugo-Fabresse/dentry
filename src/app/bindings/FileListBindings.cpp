@@ -76,6 +76,10 @@ namespace dentry::app::bindings {
                     if (toolbar)
                         toolbar->focusSearch();
                 });
+
+                map->bind(Qt::Key_M, [view] {
+                  emit view->contextMenuKeyPressed();
+              });
             }
         };
     }
