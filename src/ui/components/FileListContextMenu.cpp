@@ -46,9 +46,10 @@ namespace dentry::ui {
                 continue;
             }
 
-            QAction *action = addAction(item.label);
-            action->setEnabled(item.enabled);
+            if (!item.enabled)
+                continue;
 
+            QAction *action = addAction(item.label);
             if (item.execute)
                 connect(action, &QAction::triggered, this, [exec = item.execute] { exec(); });
         }
