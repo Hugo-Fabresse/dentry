@@ -8,9 +8,10 @@
 #pragma once
 
 #include "app/bindings/WidgetBindings.h"
+#include "app/controllers/FileOperationController.h"
 #include "ui/components/FileListView.h"
 #include "ui/components/Toolbar.h"
 
 namespace dentry::app::bindings {
-    WidgetBindings fileList(ui::FileListView* view, ui::ToolBar *toolbar);
+    WidgetBindings fileList(ui::FileListView* view, ui::ToolBar *toolbar, app::FileOperationController *fileOps);
 }

@@ -49,7 +49,7 @@ namespace dentry::app::bindings {
                     }
                 });
 
-                map->bind(Qt::Key_P, [] {
+                map->bind(Qt::Key_Tab, [] {
                     emit events::EventBus::instance()->focusWidget("FileListView");
                 });
 

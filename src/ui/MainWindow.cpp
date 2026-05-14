@@ -113,14 +113,17 @@ namespace dentry::ui {
     }
 
     void MainWindow::setupConnections() {
-        m_inputRegistry = new app::InputRegistry(this);
-        m_inputRegistry->installAll({
-            app::bindings::fileList(m_centralWidget->fileListView(), m_toolbar),
-            app::bindings::sidebar(m_centralWidget->sidebar(), m_toolbar)
-        });
-
         auto *view    = m_centralWidget->fileListView();
         auto *fsModel = qobject_cast<model::FileSystemModel *>(view->model());
+
+        // ── File operations (created early so bindings can use it) ────────
+        m_fileOpController = new app::FileOperationController(fsModel, this, this);
+
+        m_inputRegistry = new app::InputRegistry(this);
+        m_inputRegistry->installAll({
+            app::bindings::fileList(m_centralWidget->fileListView(), m_toolbar, m_fileOpController),
+            app::bindings::sidebar(m_centralWidget->sidebar(), m_toolbar)
+        });
 
         // Show current directory immediately on startup.
         if (m_toolbar && fsModel)
@@ -181,9 +184,7 @@ namespace dentry::ui {
             m_statusbar->setDirectoryStats(folders, files);
         }
 
-        // ── File operations ───────────────────────────────────────────────
-        m_fileOpController = new app::FileOperationController(fsModel, this, this);
-
+        // ── Context menu ──────────────────────────────────────────────────
         m_contextMenu = new FileListContextMenu(
             new model::ContextMenuModel(buildMenuDefinitions(m_fileOpController), this),
             m_fileOpController->clipboard(),
