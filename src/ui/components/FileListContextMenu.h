@@ -10,6 +10,7 @@
 #include "app/clipboard/Clipboard.h"
 #include "model/context_menu/ContextMenuModel.h"
 
+#include <QKeyEvent>
 #include <QMenu>
 #include <QPointer>
 #include <QString>
@@ -49,6 +50,9 @@ namespace dentry::ui {
         void popup(const QPoint      &pos,
                    const QStringList &selectedPaths,
                    const QString     &currentDirectory);
+
+    protected:
+        void keyPressEvent(QKeyEvent *event) override;
 
     private:
         /** @brief Clears and recreates QActions from the current model state. Pure loop. */

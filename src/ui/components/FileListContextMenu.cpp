@@ -56,4 +56,21 @@ namespace dentry::ui {
         log::debug("Ui") << "FileListContextMenu rebuilt:" << m_model->items().size() << "item(s)";
     }
 
+    void FileListContextMenu::keyPressEvent(QKeyEvent *event) {
+        switch (event->key()) {
+        case Qt::Key_J: {
+            QKeyEvent down(QEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+            QMenu::keyPressEvent(&down);
+            return;
+        }
+        case Qt::Key_K: {
+            QKeyEvent up(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+            QMenu::keyPressEvent(&up);
+            return;
+        }
+        default:
+            QMenu::keyPressEvent(event);
+        }
+    }
+
 } // namespace dentry::ui
